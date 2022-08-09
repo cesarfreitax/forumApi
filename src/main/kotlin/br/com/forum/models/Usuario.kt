@@ -1,4 +1,4 @@
-package br.com.forum.forum.models
+package br.com.forum.models
 
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue

@@ -1,4 +1,4 @@
-package br.com.forum.forum
+package br.com.forum
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

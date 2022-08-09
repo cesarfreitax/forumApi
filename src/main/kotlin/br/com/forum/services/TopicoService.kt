@@ -1,14 +1,12 @@
-package br.com.forum.forum.services
+package br.com.forum.services
 
-import br.com.forum.forum.dto.AtualizacaoTopicoForm
-import br.com.forum.forum.dto.DeletaTopicoForm
-import br.com.forum.forum.dto.NovoTopicoForm
-import br.com.forum.forum.dto.TopicoView
-import br.com.forum.forum.exceptions.NotFoundException
-import br.com.forum.forum.mapper.TopicoFormMapper
-import br.com.forum.forum.mapper.TopicoViewMapper
-import br.com.forum.forum.models.Topico
-import org.springframework.http.ResponseEntity
+import br.com.forum.dto.AtualizacaoTopicoForm
+import br.com.forum.dto.NovoTopicoForm
+import br.com.forum.dto.TopicoView
+import br.com.forum.exceptions.NotFoundException
+import br.com.forum.mapper.TopicoFormMapper
+import br.com.forum.mapper.TopicoViewMapper
+import br.com.forum.models.Topico
 import org.springframework.stereotype.Service
 import kotlin.collections.ArrayList
 import java.util.stream.Collectors
@@ -30,7 +28,7 @@ class TopicoService(
     fun listaPorId(id: Long): TopicoView {
         val topico = topicos.stream().filter { topico ->
             topico.id == id
-        }.findFirst().orElseThrow{NotFoundException(notFoundMessage)}
+        }.findFirst().orElseThrow{ NotFoundException(notFoundMessage) }
         return topicoViewMapper.map(topico)
     }
 
@@ -44,7 +42,7 @@ class TopicoService(
     fun atualizaPorId(form: AtualizacaoTopicoForm): TopicoView {
         val topico = topicos.stream().filter { topico ->
             topico.id == form.id
-        }.findFirst().orElseThrow{NotFoundException(notFoundMessage)}
+        }.findFirst().orElseThrow{ NotFoundException(notFoundMessage) }
         val topicoAtualizado = Topico(
             id = form.id,
             titulo = form.titulo,
@@ -62,7 +60,7 @@ class TopicoService(
     fun deletaPorId(id: Long) {
         val topico = topicos.stream().filter { topico ->
             topico.id == id
-        }.findFirst().orElseThrow{NotFoundException(notFoundMessage)}
+        }.findFirst().orElseThrow{ NotFoundException(notFoundMessage) }
         topicos = topicos.minus(topico)
     }
 

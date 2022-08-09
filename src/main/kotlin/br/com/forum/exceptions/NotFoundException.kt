@@ -1,3 +1,3 @@
-package br.com.forum.forum.exceptions
+package br.com.forum.exceptions
 
 class NotFoundException(message: String?) : RuntimeException(message){}

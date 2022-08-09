@@ -1,7 +1,7 @@
-package br.com.forum.forum.mapper
+package br.com.forum.mapper
 
-import br.com.forum.forum.dto.TopicoView
-import br.com.forum.forum.models.Topico
+import br.com.forum.dto.TopicoView
+import br.com.forum.models.Topico
 import org.springframework.stereotype.Component
 
 @Component

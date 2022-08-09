@@ -1,9 +1,9 @@
-package br.com.forum.forum.mapper
+package br.com.forum.mapper
 
-import br.com.forum.forum.dto.NovoTopicoForm
-import br.com.forum.forum.models.Topico
-import br.com.forum.forum.services.CursoService
-import br.com.forum.forum.services.UsuarioService
+import br.com.forum.dto.NovoTopicoForm
+import br.com.forum.models.Topico
+import br.com.forum.services.CursoService
+import br.com.forum.services.UsuarioService
 import org.springframework.stereotype.Component
 
 @Component

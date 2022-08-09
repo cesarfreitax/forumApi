@@ -1,9 +1,9 @@
-package br.com.forum.forum.controllers
+package br.com.forum.controllers
 
-import br.com.forum.forum.dto.AtualizacaoTopicoForm
-import br.com.forum.forum.dto.NovoTopicoForm
-import br.com.forum.forum.dto.TopicoView
-import br.com.forum.forum.services.TopicoService
+import br.com.forum.dto.AtualizacaoTopicoForm
+import br.com.forum.dto.NovoTopicoForm
+import br.com.forum.dto.TopicoView
+import br.com.forum.services.TopicoService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping

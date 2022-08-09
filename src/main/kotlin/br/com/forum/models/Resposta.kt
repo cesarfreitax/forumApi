@@ -1,4 +1,4 @@
-package br.com.forum.forum.models
+package br.com.forum.models
 
 import java.time.LocalDateTime
 import javax.persistence.Entity

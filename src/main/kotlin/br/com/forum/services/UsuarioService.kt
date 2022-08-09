@@ -1,6 +1,6 @@
-package br.com.forum.forum.services
+package br.com.forum.services
 
-import br.com.forum.forum.models.Usuario
+import br.com.forum.models.Usuario
 import org.springframework.stereotype.Service
 
 @Service

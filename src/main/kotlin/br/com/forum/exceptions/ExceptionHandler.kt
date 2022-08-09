@@ -1,7 +1,6 @@
-package br.com.forum.forum.exceptions
+package br.com.forum.exceptions
 
-import br.com.forum.forum.dto.ErrorView
-import org.springframework.http.HttpRequest
+import br.com.forum.dto.ErrorView
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
