@@ -1,4 +1,4 @@
-package br.com.forum.forum.models
+package br.com.forum.models
 
 enum class StatusTopico {
     naoResolvido,

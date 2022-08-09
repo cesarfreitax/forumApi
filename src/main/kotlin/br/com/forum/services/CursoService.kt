@@ -1,8 +1,7 @@
-package br.com.forum.forum.services
+package br.com.forum.services
 
-import br.com.forum.forum.models.Curso
+import br.com.forum.models.Curso
 import org.springframework.stereotype.Service
-import java.util.*
 
 @Service
 class CursoService(var cursos: List<Curso>) {
