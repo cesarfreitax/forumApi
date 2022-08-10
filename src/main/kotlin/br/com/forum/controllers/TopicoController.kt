@@ -2,6 +2,7 @@ package br.com.forum.controllers
 
 import br.com.forum.dto.AtualizacaoTopicoForm
 import br.com.forum.dto.NovoTopicoForm
+import br.com.forum.dto.TopicoPorCategoriaDto
 import br.com.forum.dto.TopicoView
 import br.com.forum.services.TopicoService
 import org.springframework.cache.annotation.CacheEvict
@@ -75,4 +76,9 @@ class TopicoController(private val service: TopicoService) {
 //    fun deletaPorId(@RequestBody form: DeletaTopicoForm){
 //        return service.deletaPorId(form)
 //    }
+
+    @GetMapping("/relatorio")
+    fun relatorio(): List<TopicoPorCategoriaDto> {
+        return service.relatorio()
+    }
 }
