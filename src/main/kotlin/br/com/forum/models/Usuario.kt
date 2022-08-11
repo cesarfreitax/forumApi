@@ -1,9 +1,7 @@
 package br.com.forum.models
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import com.fasterxml.jackson.annotation.JsonIgnore
+import javax.persistence.*
 
 @Entity
 data class Usuario(
@@ -11,5 +9,10 @@ data class Usuario(
     val id: Long? = null,
     val nome: String,
     val email: String,
-    val senha: String
+    val senha: String,
+
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "usuario_role")
+    val role: List<Role> = mutableListOf()
 )
