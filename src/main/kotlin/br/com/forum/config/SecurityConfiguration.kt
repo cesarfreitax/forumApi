@@ -18,8 +18,19 @@ class SecurityConfiguration(
 ) : WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity?) {
-        http?.authorizeRequests()?.anyRequest()?.authenticated()?.and()?.sessionManagement()
-            ?.sessionCreationPolicy(SessionCreationPolicy.STATELESS)?.and()?.formLogin()?.disable()?.httpBasic()
+        http?.
+        authorizeRequests()?.
+        antMatchers("/topicos")?.
+        hasAuthority("LEITURA_ESCRITA")?.
+        anyRequest()?.
+        authenticated()?.
+        and()?.
+        sessionManagement()?.
+        sessionCreationPolicy(SessionCreationPolicy.STATELESS)?.
+        and()?.
+        formLogin()?.
+        disable()?.
+        httpBasic()
     }
 
     @Bean
