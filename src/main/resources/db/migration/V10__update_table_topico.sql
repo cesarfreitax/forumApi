@@ -1,0 +1,1 @@
+UPDATE topico SET status = 'naoResolvido' WHERE id = 1;
