@@ -1,0 +1,1 @@
+UPDATE usuario SET senha = '$2a$12$qvlHurygOuufndpzsMNxCu8EoeaZ5MqPjLbAgdBMkH4f2THVunocC' WHERE id = 1;
