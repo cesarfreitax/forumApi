@@ -1,0 +1,2 @@
+INSERT INTO topico(id, titulo, mensagem, data_criacao, status, curso_id, autor_id)
+    VALUES (1, 'Erro StackOverflow, oq eh isso?', 'Lorem impsum amene situs amec tensis te sirus balac tessen', '2022-08-11 18:17:00', 'naoRespondido', 1, 1);
