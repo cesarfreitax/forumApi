@@ -1,9 +1,14 @@
 package br.com.forum.forum.integrations
 
+import br.com.forum.dto.TopicoPorCategoriaDto
+import br.com.forum.forum.models.TopicoTest
 import br.com.forum.repositories.TopicoRepository
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import org.springframework.data.domain.PageRequest
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.testcontainers.containers.MySQLContainer
@@ -17,6 +22,7 @@ class TopicoRepositoryTest {
 
     @Autowired
     private lateinit var topicoRepository: TopicoRepository
+    private val topico = TopicoTest.build()
 
     companion object {
         @Container
@@ -34,4 +40,21 @@ class TopicoRepositoryTest {
             registry.add("spring.datasource.username", mysqlContainer::getUsername)
         }
     }
+    @Test
+    fun `deve listar topico pelo nome do curso`(){
+        topicoRepository.save(topico)
+        val topico = topicoRepository.findByCursoNome(topico.curso.nome, PageRequest.of(0, 5))
+
+        assertThat(topico).isNotNull
+    }
+    @Test
+    fun `deve gerar um relatorio`(){
+        topicoRepository.save(topico)
+        val relatorio = topicoRepository.relatorio()
+
+        assertThat(relatorio).isNotNull
+        assertThat(relatorio.first()).isExactlyInstanceOf(TopicoPorCategoriaDto::class.java)
+    }
+
+
 }
