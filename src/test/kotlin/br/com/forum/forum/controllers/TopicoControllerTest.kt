@@ -28,6 +28,7 @@ class TopicoControllerTest {
 
     companion object {
         private const val RECURSO = "/topicos/"
+        private const val RECURSO_ID = RECURSO.plus("%s")
     }
 
     @BeforeEach
@@ -48,6 +49,13 @@ class TopicoControllerTest {
     @Test
     fun `deve retornar codigo 200 quando chamar topico COM token`(){
         mockMvc.get(RECURSO) {
+            headers { token?.let { this.setBearerAuth(it) } }
+        }.andExpect { status { is2xxSuccessful() } }
+    }
+
+    @Test
+    fun `deve retornar codigo 200 quando chamar topico por ID COM TOKEN`(){
+        mockMvc.get(RECURSO_ID.format(1)) {
             headers { token?.let { this.setBearerAuth(it) } }
         }.andExpect { status { is2xxSuccessful() } }
     }
