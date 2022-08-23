@@ -29,28 +29,22 @@ import org.springframework.web.util.UriComponentsBuilder
 import javax.validation.Valid
 
 @RestController
-@SecurityRequirement(name = "bearerAuth")
 @RequestMapping("/topicos")
+@SecurityRequirement(name = "bearerAuth")
 class TopicoController(private val service: TopicoService) {
 
     @GetMapping
-    @Cacheable("topicos")
     fun listar(
         @RequestParam(required = false)
         nomeCurso: String?,
         @PageableDefault(size = 20, sort = ["dataCriacao"], direction = Sort.Direction.DESC) paginacao: Pageable,
-    ): Page<TopicoView> {
-        return service.listar(nomeCurso, paginacao)
-    }
+    ) = service.listar(nomeCurso, paginacao)
 
     @GetMapping("/{id}")
-    fun listaPorId(@PathVariable id: Long): TopicoView {
-        return service.listaPorId(id)
-    }
+    fun listaPorId(@PathVariable id: Long) = service.listaPorId(id)
 
     @PostMapping
     @Transactional
-    @CacheEvict(value = ["topicos"], allEntries = true)
     fun cadastrar(
         @RequestBody @Valid form: NovoTopicoForm, uriBuilder: UriComponentsBuilder
     ): ResponseEntity<TopicoView> {
@@ -61,18 +55,14 @@ class TopicoController(private val service: TopicoService) {
 
     @PutMapping
     @Transactional
-    @CacheEvict(value = ["topicos"], allEntries = true)
     fun atualizaPorId(@RequestBody @Valid form: AtualizacaoTopicoForm): ResponseEntity<TopicoView> {
         val topicoView = service.atualizaPorId(form)
         return ResponseEntity.ok(topicoView)
     }
 
     @DeleteMapping("/{id}")
-    @CacheEvict(value = ["topicos"], allEntries = true)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deletaPorId(@PathVariable id: Long) {
-        return service.deletaPorId(id)
-    }
+    fun deletaPorId(@PathVariable id: Long) = service.deletaPorId(id)
 
 //    @DeleteMapping
 //    fun deletaPorId(@RequestBody form: DeletaTopicoForm){
