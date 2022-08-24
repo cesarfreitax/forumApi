@@ -1,4 +1,4 @@
-//package br.com.forum.forum.integrations
+package br.com.forum.forum.integrations//package br.com.forum.forum.integrations
 //
 //import br.com.forum.dto.TopicoPorCategoriaDto
 //import br.com.forum.forum.configuration.DataBaseContainerConfiguration
