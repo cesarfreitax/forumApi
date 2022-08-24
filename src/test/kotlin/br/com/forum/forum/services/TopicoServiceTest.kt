@@ -5,10 +5,12 @@ import br.com.forum.forum.models.TopicoTest
 import br.com.forum.forum.models.TopicoViewTest
 import br.com.forum.mapper.TopicoFormMapper
 import br.com.forum.mapper.TopicoViewMapper
+import br.com.forum.models.Topico
 import br.com.forum.repositories.TopicoRepository
 import br.com.forum.services.TopicoService
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.slot
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -18,55 +20,69 @@ import org.springframework.data.domain.Pageable
 import java.util.*
 
 class TopicoServiceTest {
+    private val topico = TopicoTest.build()
+    private val topicoView = TopicoViewTest.build()
 
-    val topicos = PageImpl(listOf(TopicoTest.build()))
+    private val pages = PageImpl(listOf(topico))
 
-    val paginacao: Pageable = mockk()
+    private val pageable: Pageable = mockk()
+    private val topicoViewMapper: TopicoViewMapper = mockk()
+    private val topicoFormMapper: TopicoFormMapper = mockk()
 
-    val topicoRepository: TopicoRepository = mockk{
-        every { findByCursoNome(any(), any()) } returns topicos
-        every { findAll(paginacao) } returns topicos
+
+    private val topicoRepository: TopicoRepository = mockk{
+        every { findAll(pageable) } returns pages
+        every { findByCursoNome(any(), any()) } returns pages
     }
-    val topicoViewMapper: TopicoViewMapper = mockk {
-        every { map(any()) } returns TopicoViewTest.build()
-    }
 
-    val topicoFormMapper: TopicoFormMapper = mockk()
-
-    val topicoService = TopicoService(
-        topicoRepository,
-        topicoViewMapper,
-        topicoFormMapper
+    private val topicoService = TopicoService(
+        repository = topicoRepository,
+        topicoViewMapper = topicoViewMapper,
+        topicoFormMapper = topicoFormMapper,
+        notFoundMessage = "Topico nao encontrado!"
     )
 
     @Test
     fun `deve listar topicos a partir do nome do curso`(){
+        val slot = slot<Topico>()
+        every { topicoViewMapper.map(capture(slot)) } returns topicoView
 
-        topicoService.listar("Kotlin Avancado", paginacao)
+        topicoService.listar("Kotlin Basico", pageable)
 
+        verify(exactly = 0) { topicoRepository.findAll(pageable) }
         verify(exactly = 1) { topicoRepository.findByCursoNome(any(), any()) }
         verify(exactly = 1) { topicoViewMapper.map(any()) }
-        verify(exactly = 0) { topicoRepository.findAll(paginacao) }
+
+        assertThat(slot.captured.titulo).isEqualTo(topico.titulo)
+        assertThat(slot.captured.mensagem).isEqualTo(topico.mensagem)
+        assertThat(slot.captured.status).isEqualTo(topico.status)
     }
 
     @Test
-    fun `deve listar todos os topicos se o nome do curso for nulo`(){
-        topicoService.listar(null, paginacao)
+    fun `deve listar todos os topicos quando nome do curso for nulo`() {
+        val slot = slot<Topico>()
+        every { topicoViewMapper.map(capture(slot)) } returns topicoView
 
+        topicoService.listar(null, pageable)
+
+        verify(exactly = 1) { topicoRepository.findAll(pageable) }
         verify(exactly = 0) { topicoRepository.findByCursoNome(any(), any()) }
         verify(exactly = 1) { topicoViewMapper.map(any()) }
-        verify(exactly = 1) { topicoRepository.findAll(paginacao) }
+
+        assertThat(slot.captured.titulo).isEqualTo(topico.titulo)
+        assertThat(slot.captured.mensagem).isEqualTo(topico.mensagem)
+        assertThat(slot.captured.status).isEqualTo(topico.status)
     }
 
     @Test
-    fun `deve retornar NotFoundException quando o topico nao for achado`(){
+    fun `deve lancar excecao se nao achar topico por id`() {
         every { topicoRepository.findById(any()) } returns Optional.empty()
 
-        val atual = assertThrows<NotFoundException> {
-            topicoService.listaPorId(1)
+        val actual = assertThrows<NotFoundException> {
+            topicoService.listaPorId(2)
         }
 
-        assertThat(atual.message).isEqualTo("Tópico não encontrado.")
+        assertThat(actual.message).isEqualTo("Topico nao encontrado!")
     }
 
 
