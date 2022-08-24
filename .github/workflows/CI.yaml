@@ -16,7 +16,7 @@ jobs:
       - name: Set JDK
         uses: actions/setup-java@v1
         with:
-          java-version: '18'
+          java-version: '11'
 
       - name: Cache de dependencies
         uses: actions/cache@v1
