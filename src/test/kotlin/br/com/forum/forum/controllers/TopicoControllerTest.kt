@@ -1,6 +1,7 @@
 package br.com.forum.forum.controllers
 
 import br.com.forum.config.JWTUtil
+import br.com.forum.forum.configuration.DataBaseContainerConfiguration
 import br.com.forum.models.Role
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

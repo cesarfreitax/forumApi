@@ -1,6 +1,7 @@
 package br.com.forum.forum.integrations
 
 import br.com.forum.dto.TopicoPorCategoriaDto
+import br.com.forum.forum.configuration.DataBaseContainerConfiguration
 import br.com.forum.forum.models.TopicoTest
 import br.com.forum.repositories.TopicoRepository
 import org.assertj.core.api.Assertions.assertThat
@@ -40,6 +41,7 @@ class TopicoRepositoryTest {
             registry.add("spring.datasource.username", mysqlContainer::getUsername)
         }
     }
+
     @Test
     fun `deve listar topico pelo nome do curso`(){
         topicoRepository.save(topico)
@@ -51,7 +53,7 @@ class TopicoRepositoryTest {
     fun `deve gerar um relatorio`(){
         topicoRepository.save(topico)
         val relatorio = topicoRepository.relatorio()
-
+    
         assertThat(relatorio).isNotNull
         assertThat(relatorio.first()).isExactlyInstanceOf(TopicoPorCategoriaDto::class.java)
     }
